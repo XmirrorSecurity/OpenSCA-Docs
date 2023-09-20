@@ -129,12 +129,12 @@ opensca-cli -url ${url} -token ${token} -path ${project_path} -out ${filename}.$
 
 | 字段                | 描述                              | 是否必填 |
 | :------------------ | :-------------------------------- | :------- |
-| `vendor`            | 组件厂商                          | 否       |
+| `vendor`            | 组件厂商                          | 否（组件语言为JAVA时必填）|
 | `product`           | 组件名                            | 是       |
 | `version`           | 漏洞影响版本                      | 是       |
 | `language`          | 组件语言                          | 是       |
 | `name`              | 漏洞名                            | 否       |
-| `id`                | 自定义编号                        | 是       |
+| `id`                | 自定义编号                        | 是（需唯一）|
 | `cve_id`            | cve 编号                          | 否       |
 | `cnnvd_id`          | cnnvd 编号                        | 否       |
 | `cnvd_id`           | cnvd 编号                         | 否       |
