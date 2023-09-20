@@ -184,7 +184,7 @@ v1.0.13开始支持`sql`类的数据源，需要按照上述字段预先创建�
 
 ## 版本记录
 
-### [#](https://opensca.xmirror.cn/docs/v1/cli.html#v1)v1
+v1
 
 v1.0.13 新增多格式漏洞库兼容，支持SQLite及CSV格式报告导出
 
