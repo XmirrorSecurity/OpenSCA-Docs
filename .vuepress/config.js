@@ -1,7 +1,6 @@
 const dev = process.argv.includes('dev')
 
 module.exports = {
-    dest: '../build/docs',
     base: dev ? '/' : '/docs/',
     title: 'OpenSCA-用开源的方式做开源风险治理 | 软件成分分析 |  SBOM清单 | 漏洞解析 | 依赖解析 | 许可证合规分析-支持离线/在线免费使用',
     description: 'OpenSCA是一款开源免费的SCA工具，免费轻量、覆盖离线及在线场景，支持多种主流语言检测及标准格式SBOM清单，能够输出开源组件及漏洞清单，为企业及个人用户提供低成本、高精度、稳定易用的开源软件供应链安全解决方案',
