@@ -46,7 +46,7 @@
 - 连接配置：点击操作栏的“Test”按钮，配置平台Url及Token信息，点击“测试连接”按钮可测试连接配置是否正确，连接成功后就可以开始检测啦；
 - 设置：点击操作栏的“Setting”，查看OpenSCA Xcheck相关设置信息。
 - 使用说明：点击操作栏的“Instructions”，查看OpenSCA Xcheck相关使用说明。
-- 查看更多：点击操作栏的“See more”，跳转到[opensca.xmirror.cn](https://opensca.xmirror.cn)查看OpenSCA Xcheck 更多相关信息。
+- 查看更多：点击操作栏的“See more”，跳转到[opensca.xmirror.cn](https://opensca.xmirror.cn)查看OpenSCA Xcheck更多相关信息。
 
 <img src="https://opensca.xmirror.cn/docs/img/vscode_02.jpg" alt="xcheck_function" />
 
