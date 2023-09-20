@@ -33,8 +33,8 @@ module.exports = {
                   title: 'IDEA插件使用',   // 必要的
                   path: 'idea',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
                   collapsable: true, // 可选的, 默认值是 true,
-            },
-                  {
+                },
+                {
                   title: 'VS Code插件使用',   // 必要的
                   path: 'vscode',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
                   collapsable: true, // 可选的, 默认值是 true,
