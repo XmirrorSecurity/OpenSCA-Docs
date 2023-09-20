@@ -63,6 +63,23 @@ opensca-cli -db db.json -path ${project_path}
 ```shell
 opensca-cli -url ${url} -token ${token} -path ${project_path} -out ${filename}.${suffix}
 ```
+### 使用Docker容器进行检测
+
+```shell
+# 检测当前目录的依赖信息
+docker run -ti --rm -v $(PWD):/src opensca/opensca-cli
+
+# 使用云端漏洞数据库:
+docker run -ti --rm -v $(PWD):/src opensca/opensca-cli -token ${put_your_token_here}
+
+# 使用本地 JSON 漏洞数据源:
+docker run -ti --rm -v $(PWD):/src -v /localDB:/data opensca/opensca-cli -db /data/db.json
+```
+
+同样的，在 Docker 容器中，也可以使用配置文件进行高级设置。将 config.json 保存到项目文件夹中，运行时使用 -v ${项目路径}:/src 将项目目录映射至容器 /src 目录即可。
+
+更多信息请参考 [Docker Hub](https://hub.docker.com/r/opensca/opensca-cli) 主页
+
 
 ## 参数说明
 
