@@ -20,7 +20,7 @@
 [登录](https://opensca.xmirror.cn/login)OpenSCA云平台获取token，然后进入终端执行检测命令
 
 ```shell
-opensca-cli -url https://opensca.xmirror.cn -token ${token} -path ${project_path} -out output.html
+opensca-cli -token ${token} -path ${project_path} -out output.html
 ```
 
 ## 第三步：查看检测结果
