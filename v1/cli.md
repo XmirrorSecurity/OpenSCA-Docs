@@ -7,10 +7,15 @@
 2. 或者下载源码编译(需要 `go 1.18` 及以上版本)
 
    ```
-   git clone https://github.com/XmirrorSecurity/OpenSCA-cli.git opensca
-   cd opensca
-   go work init cli analyzer util
-   go build -o opensca-cli cli/main.go
+   //github
+   git clone https://github.com/XmirrorSecurity/OpenSCA-cli.git opensca && cd opensca
+   go build
+   ```
+
+   ```
+   //gitee
+   git clone https://gitee.com/XmirrorSecurity/OpenSCA-cli.git opensca && cd opensca
+   go build
    ```
 
    默认生成当前系统架构的程序，如需生成其他系统架构可配置环境变量后编译
@@ -23,25 +28,29 @@
 
 ## 使用样例
 
-### 检测并输出检测结果到命令行/终端界面（默认）
-
-仅检测组件信息
-
 ```shell
-opensca-cli -path ${project_path}
+# 使用opensca-cli检测
+opensca-cli -path ${project_path} -config ${config_path} -out ${filename}.${suffix} -token ${token}
+
+# 写好配置文件后也可以直接执行opensca-cli
+opensca-cli
 ```
 
-连接云平台
+### 使用Docker容器进行检测
 
 ```shell
-opensca-cli -url ${url} -token ${token} -path ${project_path}
+# 检测当前目录的依赖信息
+docker run -ti --rm -v $(PWD):/src opensca/opensca-cli
+
+# 使用云端漏洞数据库:
+docker run -ti --rm -v $(PWD):/src opensca/opensca-cli -token ${put_your_token_here}
 ```
 
-或使用本地漏洞库
+如需在docker容器中使用配置文件，将config.json放到src挂载目录即可。
 
-```shell
-opensca-cli -db db.json -path ${project_path}
-```
+也可以使用-config指定其他容器内路径。
+
+更多信息请参考[Docker Hub 主页](https://hub.docker.com/r/opensca/opensca-cli)
 
 ### 检测并输出检测结果文件（使用`out`参数）
 
@@ -57,28 +66,8 @@ opensca-cli -db db.json -path ${project_path}
 | SBOM清单 | `spdx`   | `.spdx` `.spdx.json` `.spdx.xml` | `v1.0.8`及以上  |
 |          | `cdx`    | `.cdx.json` `.cdx.xml`           | `v1.0.11`及以上 |
 |          | `swid`   | `.swid.json` `.swid.xml`         | `v1.0.11`及以上 |
+|          | `dsdx`   | `.dsdx` `.dsdx.json` `.dsdx.xml` | `v3.0.0`及以上 |
 
-#### 样例
-
-```shell
-opensca-cli -url ${url} -token ${token} -path ${project_path} -out ${filename}.${suffix}
-```
-### 使用Docker容器进行检测
-
-```shell
-# 检测当前目录的依赖信息
-docker run -ti --rm -v $(PWD):/src opensca/opensca-cli
-
-# 使用云端漏洞数据库:
-docker run -ti --rm -v $(PWD):/src opensca/opensca-cli -token ${put_your_token_here}
-
-# 使用本地 JSON 漏洞数据源:
-docker run -ti --rm -v $(PWD):/src -v /localDB:/data opensca/opensca-cli -db /data/db.json
-```
-
-同样的，在 Docker 容器中，也可以使用配置文件进行高级设置。将 config.json 保存到项目文件夹中，运行时使用 -v ${项目路径}:/src 将项目目录映射至容器 /src 目录即可。
-
-更多信息请参考 [Docker Hub](https://hub.docker.com/r/opensca/opensca-cli) 主页
 
 
 ## 参数说明
@@ -87,34 +76,28 @@ docker run -ti --rm -v $(PWD):/src -v /localDB:/data opensca/opensca-cli -db /da
 
 | 参数       | 类型     | 描述                                                         | 使用样例                                                     |
 | ---------- | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `config`   | `string` | 指定配置文件路径，程序启动时将配置文件中的参数作为启动参数，配置参数与命令行输入参数冲突时优先使用输入参数 | `-config config.json`                                        |
-| `path`     | `string` | 指定要检测的文件或目录路径                                   | `-path ./foo`                                                |
-| `url`      | `string` | 从云漏洞库查询漏洞，指定要连接云服务的地址，与 `token` 参数一起使用 | `-url https://opensca.xmirror.cn`                            |
-| `token`    | `string` | 云服务验证 `token`，需要在云服务平台申请，与 `url` 参数一起使用 | `-token xxxxxxx`                                             |
-| `cache`    | `bool`   | 建议开启，缓存下载的文件(例如 `.pom` 文件)，重复检测相同组件时会节省时间，下载的文件会保存到工具所在目录的.cache 目录下 | `-cache`                                                     |
-| `vuln`     | `bool`   | 结果仅保留有漏洞信息的组件，使用该参数将不会保留组件层级结构 | `-vuln`                                                      |
-| `out`      | `string` | 将检测结果保存到指定文件，根据后缀生成不同格式的文件，默认为 `JSON` 格式 | `-out output.json` <br />`-out output.xml`<br />`-out output.html`<br />`-out output.sqlite`<br />`-out output.csv`<br />`-out output.spdx`<br />`-out output.spdx.xml`<br />`-out output.spdx.json`<br />`-out output.swid.xml`<br />`-out output.swid.json`<br />`-out output.cdx.xml`<br />`-out output.cdx.json`<br /> |
-| `db`       | `string` | 指定本地漏洞库文件，希望使用自己漏洞库时可用，漏洞库文件支持 `json` 或`sql`格式，样例见后文；若同时使用云端漏洞库与本地漏洞库，漏洞查询结果取并集 | `-db db.json`                                                |
-| `progress` | `bool`   | 显示进度条                                                   | `-progress`                                                  |
-| `dedup`    | `bool`   | 相同组件去重                                                 | `-dedup`                                                     |
-| `dironly`  | `bool`   | 跳过解压步骤直接分析目录                                     | `-dironly`                                                   |
-| `log`      | `bool`   | 指定日志文件位置                                             | `-log`                                                       |
+| `config`   | `string` | 指定配置文件路径 | `-config config.json`                                        |
+| `path`     | `string` | 指定检测项目路径                                   | `-path ./foo`                                                |
+| `out`      | `string` | 根据后缀生成报告| `-out out.json,out.html`  |
+| `log`      | `bool`   | 指定日志文件路径                                             | `-log`                                                       |
+| `token`    | `string` | 云服务验证 `token` | `-token xxx`                                             |
 
-**1.0.9及以上版本**支持配置maven私服库，需要在配置文件config.json里进行配置，格式如下：
+完整的检测参数需在配置文件中配置 
+（*v3.0.0开始url参数不再通过命令行指定，默认为OpenSCA云漏洞库服务`https://opensca.xmirror.cn/`，也可通过配置文件指定其他数据格式相符的云漏洞库；使用过往版本可在命令行或配置文件指定url参数。）
 
-```json
-{
-    "maven": [
-        {
-            "repo": "url",
-            "user": "user",
-            "password": "password"
-        }
-    ]
-}
-```
+配置字段及说明详见`config.json`
 
----
+配置文件与命令行参数冲突时优先使用命令行输入参数
+
+指定了配置文件路径但目标位置不存在文件时会在目标位置生成默认配置文件
+
+未指定配置文件路径会依次尝试访问以下位置:
+1. 工作目录下的config.json
+2. 用户目录下的opensca_config.json
+3. opensca-cli目录下的config.json
+
+
+## 配置本地漏洞库（可选）
 
 ### 漏洞库文件格式
 
@@ -142,7 +125,7 @@ docker run -ti --rm -v $(PWD):/src -v /localDB:/data opensca/opensca-cli -db /da
 ]
 ```
 
-#### 漏洞库字段说明
+### 漏洞库字段说明
 
 | 字段                | 描述                              | 是否必填 |
 | :------------------ | :-------------------------------- | :------- |
@@ -166,23 +149,30 @@ docker run -ti --rm -v $(PWD):/src -v /localDB:/data opensca/opensca-cli -db /da
 
 *本地漏洞库中language字段设定值包含java、js、golang、rust、php、ruby、python，其他语言不受设定匹配限制，按实际情况填写即可。
 
-v1.0.13开始支持`sql`类的数据源，需要按照上述字段预先创建好数据表并在配置文件中作相应配置：
+### 漏洞库配置示例
 
-```json
+```shell
 {
   "origin":{
+    "json":"db.json",
     "mysql":{
       "dsn":"user:password@tcp(ip:port)/dbname",
       "table":"table_name"
     },
-    "json":{
-      "dsn":"db.json"
+    "sqlite":{
+      "dsn":"sqlite.db",
+      "table":"table_name"
     }
   }
 }
 ```
 
+
 ## 版本记录
+
+v3
+
+v3.0.0 重构引擎，升级解析逻辑，可基于SBOM清单输出漏洞和许可证信息
 
 v1
 
