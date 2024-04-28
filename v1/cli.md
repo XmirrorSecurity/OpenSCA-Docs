@@ -1,30 +1,49 @@
 # OpenSCA-cli检测指南
 
-##  下载安装
+## 下载安装
 
-1. 从 [GitHub](https://github.com/XmirrorSecurity/OpenSCA-cli/releases)或 [Gitee ](https://gitee.com/XmirrorSecurity/OpenSCA-cli/releases) 下载对应系统架构的可执行文件压缩包
+- 使用一键安装脚本
+  - Mac/Linux 用户
+    ```shell
+    curl -sSL https://raw.githubusercontent.com/XmirrorSecurity/OpenSCA-cli/master/scripts/install.sh | sh
 
-2. 或者下载源码编译(需要 `go 1.18` 及以上版本)
+    # 如果在下载中遇到网络问题，可尝试使用以下命令
+    curl -sSL https://gitee.com/XmirrorSecurity/OpenSCA-cli/raw/master/scripts/install.sh | sh -s -- gitee
+    ```
+  - Windows 用户(Powershell)
+    ```powershell
+    iex "&{$(irm https://raw.githubusercontent.com/XmirrorSecurity/OpenSCA-cli/master/scripts/install.ps1)}"
 
-   ```
-   //github
-   git clone https://github.com/XmirrorSecurity/OpenSCA-cli.git opensca && cd opensca
-   go build
-   ```
+    # 如果在下载中遇到网络问题，可尝试使用以下命令
+    iex "&{$(irm https://gitee.com/XmirrorSecurity/OpenSCA-cli/raw/master/scripts/install.ps1)} gitee"
+    ```
+- 通过包管理器安装
+  - Mac/Linux 用户可通过 [Homebrew](https://brew.sh/) 安装
+    ```shell
+    brew install opensca-cli
+    ```
+  - Windows 用户可通过 [Winget](https://github.com/microsoft/winget-cli) 或 [Scoop](https://scoop.sh) 安装
+    ```shell
+    # Winget
+    winget install OpenSCA-cli
 
-   ```
-   //gitee
-   git clone https://gitee.com/XmirrorSecurity/OpenSCA-cli.git opensca && cd opensca
-   go build
-   ```
+    # Scoop
+    scoop bucket add extras
+    scoop install extras/opensca-cli
+    ```
+- 直接下载二进制文件
+  - 从 [Github Release]() 或 [Gitee Release]() 下载对应系统架构的可执行程序压缩包，并解压到本地任意目录下
+- 通过源码编译安装
+  - 从 [Github]() 或 [Gitee]() 下载源码并编译
+    ```shell
+    # github
+    git clone https://github.com/XmirrorSecurity/OpenSCA-cli.git opensca && cd opensca
+    go build
 
-   默认生成当前系统架构的程序，如需生成其他系统架构可配置环境变量后编译
-
-   - 禁用`CGO_ENABLED` `CGO_ENABLED=0`
-   - 指定操作系统 `GOOS=${OS} \\ darwin,freebsd,liunx,windows`
-   - 指定体系架构 `GOARCH=${arch} \\ 386,amd64,arm`
-
-
+    # gitee
+    git clone https://gitee.com/XmirrorSecurity/OpenSCA-cli.git opensca && cd opensca
+    go build
+    ```
 
 ## 使用样例
 
@@ -171,6 +190,14 @@ docker run -ti --rm -v $(PWD):/src opensca/opensca-cli -token ${put_your_token_h
 ## 版本记录
 
 v3
+
+v3.0.4 漏洞数据匹配支持版本号集合，优化 maven/npm 解析能力， 支持 sarif 格式报告导出
+
+v3.0.3 修复了rar和tar无检出的bug
+
+v3.0.2 支持通过参数同步检出结果至OpenSCA SaaS
+
+v3.0.1 修复windows下对Python/JAVA/JS一些特殊情况的解析问题; 优化Gradle解析能力
 
 v3.0.0 重构引擎，升级解析逻辑，可基于SBOM清单输出漏洞和许可证信息
 
