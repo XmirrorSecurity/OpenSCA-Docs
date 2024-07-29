@@ -10,7 +10,7 @@
 
 <img src="./assets/idea/xcheck_marketplace.jpg" alt="安装插件" />
 
-- 安装方法二：访问[OpenSCA插件中心](https://opensca.xmirror.cn/pages/plug-in)下载插件并安装
+- 安装方法二：访问[OpenSCA插件中心](https://opensca.xmirror.cn/console/plugin)下载插件并安装
 
   以IntelliJ IDEA为例：将下载下来的插件安装包拖入适配的IDE中即可
 
