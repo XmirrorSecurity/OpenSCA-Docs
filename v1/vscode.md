@@ -10,7 +10,7 @@
 
 <img src="https://opensca.xmirror.cn/docs/img/vscode_01.jpg" alt="xcheck_market" />
 
-**安装方法二**：在[OpenSCA平台](https://opensca.xmirror.cn/pages/plug-in)下载插件安装
+**安装方法二**：在[OpenSCA平台](https://opensca.xmirror.cn/console/plugin)下载插件安装
 
 - 从OpenSCA平台下载 “OpenSCA-Xcheck.vsix”；
 - 打开VS Code，依次操作：左边栏打开扩展->扩展顶栏的更多操作->“从VSIX安装”->找到并安装“OpenSCA-Xcheck.vsix”；
